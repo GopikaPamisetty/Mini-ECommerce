@@ -34,4 +34,4 @@ REACT_APP_API_URL=http://localhost:5000
 
 3. Start the frontend:
 
-npm start
+npm run dev 
