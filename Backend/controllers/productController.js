@@ -2,7 +2,6 @@ const Product = require('../models/productModel');
 const pool = require('../db');
 
 // POST /api/products
-// POST /api/products
 exports.createProduct = async (req, res) => {
     const { name, price, description, image_url } = req.body;
   
@@ -31,78 +30,7 @@ exports.getAllProducts = async (req, res) => {
 };
 
 
-// exports.search = async (req, res) => {
-//     const { q } = req.query;
-  
-//     try {
-//       let result;
-  
-//       if (q) {
-//         const keywords = q.toLowerCase().split(/\s+/).filter(word => word); // split and clean
-  
-//         // Build dynamic query
-//         const conditions = keywords.map((_, idx) =>
-//           `(LOWER(name) LIKE $${idx + 1} OR LOWER(description) LIKE $${idx + 1})`
-//         );
-  
-//         const sql = `
-//           SELECT * FROM products
-//           WHERE ${conditions.join(' OR ')}
-//           ORDER BY created_at DESC
-//         `;
-  
-//         const values = keywords.map(word => `%${word}%`);
-  
-//         result = await pool.query(sql, values);
-//       } else {
-//         result = await pool.query('SELECT * FROM products ORDER BY created_at DESC');
-//       }
-  
-//       res.json(result.rows);
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).json({ error: 'Failed to fetch products' });
-//     }
-//   };
-  
-// In a search.js controller
-// const { OpenAI } = require('openai');
-// //const pool = require('../db');
 
-// const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-// exports.search = async (req, res) => {
-//   const { q } = req.query;
-//   if (!q) {
-//     const result = await pool.query('SELECT * FROM products ORDER BY created_at DESC');
-//     return res.json(result.rows);
-//   }
-
-//   try {
-//     // Step 1: Get the embedding of the query
-//     const embeddingResponse = await openai.embeddings.create({
-//       input: q,
-//       model: 'text-embedding-ada-002'
-//     });
-
-//     const queryEmbedding = embeddingResponse.data[0].embedding;
-
-//     // Step 2: Use pgvector to query products with similar embeddings
-//     const result = await pool.query(`
-//       SELECT *, 1 - (embedding <=> $1) AS similarity
-//       FROM products
-//       ORDER BY similarity DESC
-//       LIMIT 10;
-//     `, [queryEmbedding]);
-
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Semantic search failed' });
-//   }
-// };
-//                            QQZZZZZZZZZZZZZZZZZZZZZZZZZZ
-//SSFFFFFFFFFFFFFFFFFFFFYYYYYYYY
 exports.search = async (req, res) => {
   const { q } = req.query;
   console.log('Search query:', q);
@@ -171,64 +99,8 @@ exports.search = async (req, res) => {
   }
 };
 
-//33333333233333AAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  
 
-// exports.search = async (req, res) => {
-//   const { q } = req.query;
-
-//   const synonymMap = {
-//     sit: ['Chair', 'sofa', 'stool'],
-//     wear: ['shirt', 't-shirt', 'pants', 'jeans'],
-//     sleep: ['bed', 'mattress'],
-//     relax: ['sofa', 'recliner', 'bean bag'],
-//     work: ['desk', 'chair', 'laptop table'],
-//     store: ['shelf', 'cabinet', 'drawer', 'rack']
-//   };
-
-//   try {
-//     if (!q) {
-//       // Return all products if no query
-//       const all = await pool.query('SELECT * FROM products ORDER BY created_at DESC');
-//       return res.json(all.rows);
-//     }
-
-//     // Split query into words
-//     const words = q.toLowerCase().split(/\s+/);
-
-//     // Expand with synonyms
-//     let searchTerms = [];
-//     words.forEach(word => {
-//       if (synonymMap[word]) {
-//         searchTerms = searchTerms.concat(synonymMap[word]);
-//       } else {
-//         searchTerms.push(word);
-//       }
-//     });
-
-//     // Remove duplicates
-//     searchTerms = [...new Set(searchTerms)];
-
-//     // Build the ILIKE conditions
-//     const ilikeConditions = searchTerms.map((_, idx) => `(name ILIKE $${idx + 1} OR description ILIKE $${idx + 1})`).join(' OR ');
-//     const values = searchTerms.map(term => `%${term}%`);
-
-//     const result = await pool.query(
-//       `SELECT * FROM products WHERE ${ilikeConditions} ORDER BY created_at DESC`,
-//       values
-//     );
-
-//     res.json(result.rows);
-
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Failed to search products' });
-//   }
-// };
-
-
-
-// ✅ Update a product
+//  Update a product
 exports.updateProduct = async (req, res) => {
     const { id } = req.params;
     const { name, description, price, image_url } = req.body;
@@ -255,7 +127,7 @@ exports.updateProduct = async (req, res) => {
   };
   
   
-  // ✅ Delete a product
+  //  Delete a product
   exports.deleteProduct = async (req, res) => {
     const { id } = req.params;
   
