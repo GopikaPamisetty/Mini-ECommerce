@@ -16,7 +16,13 @@ app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
   next();
 });
+// Serve static files
+app.use(express.static(path.join(__dirname, '../Frontend/dist'))); // adjust path as needed
 
+// Handle client-side routes for React
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../Frontend/dist/index.html'));
+});
 // Import routes
 const productRoutes = require('./routes/productRoutes');
 
