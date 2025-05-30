@@ -9,7 +9,7 @@ export default function ProductForm() {
     price: '',
     description: '',
     image_url: '',
-    stock: '',
+    
   });
 
   const [successMessage, setSuccessMessage] = useState('');
@@ -27,7 +27,7 @@ export default function ProductForm() {
       .post(`${API}/api/products`, formData)
       .then((response) => {
         setSuccessMessage('Product added successfully! 🎉');
-        setFormData({ name: '', price: '', description: '', image_url: '', stock: '' });
+        setFormData({ name: '', price: '', description: '', image_url: '' });
 
         
         setTimeout(() => setSuccessMessage(''), 10000);
@@ -90,14 +90,7 @@ export default function ProductForm() {
           placeholder="Image URL"
           className="w-full p-3 border border-gray-300 rounded mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <input
-          name="stock"
-          value={formData.stock}
-          onChange={handleChange}
-          placeholder="Stock"
-          type="number"
-          className="w-full p-3 border border-gray-300 rounded mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition"

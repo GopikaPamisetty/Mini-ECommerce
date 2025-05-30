@@ -11,7 +11,6 @@ export default function EditProduct() {
     price: '',
     description: '',
     image_url: '',
-    stock: '',
 
   });
   const [loading, setLoading] = useState(false);
@@ -28,8 +27,7 @@ export default function EditProduct() {
           price: res.data.price || '',
           description: res.data.description || '',
           image_url: res.data.image_url || '',
-          stock: res.data.stock || '',
-
+          
         });
       } catch (err) {
         console.error('Error fetching product:', err);
@@ -50,7 +48,7 @@ export default function EditProduct() {
     
     setFormData(prev => ({
       ...prev,
-      [name]: ['price', 'stock'].includes(name) ? parseFloat(value) || '' : value
+      [name]: ['price'].includes(name) ? parseFloat(value) || '' : value
 
     }));
   };
@@ -190,23 +188,7 @@ export default function EditProduct() {
               disabled={loading}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="stock">
-              Stock *
-            </label>
-            <input
-              id="stock"
-              name="stock"
-              type="number"
-              min="0"
-              value={formData.stock}
-              onChange={handleChange}
-              placeholder="Enter stock quantity"
-              className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              required
-              disabled={loading}
-            />
-          </div>
+          
 
 
           <div className="flex justify-end space-x-3">
