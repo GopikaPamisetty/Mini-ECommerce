@@ -9,9 +9,9 @@ const {
 } = require('../controllers/productController');
 
 // Routes
-router.post('/', createProduct);               // Create product
-router.get('/', getAllProducts);               // Get all products
-router.put('/:id', updateProduct);             // Update product by ID
+router.post('/', createProduct);               
+router.get('/', getAllProducts);               
+router.put('/:id', updateProduct);             
 router.delete('/:id', deleteProduct);
-router.get('/:id', getProductById);  // This should handle /api/products/3
+router.get('/:id', getProductById);  
 module.exports = router;
