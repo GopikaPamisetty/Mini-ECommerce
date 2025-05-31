@@ -13,6 +13,7 @@ export default function ProductForm() {
   });
 
   const [successMessage, setSuccessMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -23,21 +24,22 @@ export default function ProductForm() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post(`${API}/api/products`, formData)
-      .then((response) => {
-        setSuccessMessage('Product added successfully! 🎉');
-        setFormData({ name: '', price: '', description: '', image_url: '' });
-
-        
-        setTimeout(() => setSuccessMessage(''), 10000);
-      })
-      .catch((error) => {
-        console.log('Failed:', error.response || error.message);
-        alert('Failed to add product');
-      });
+    setIsSubmitting(true); // show loading
+  
+    try {
+      const response = await axios.post(`${API}/api/products`, formData);
+      setSuccessMessage('Product added successfully! 🎉');
+      setFormData({ name: '', price: '', description: '', image_url: '' });
+  
+      setTimeout(() => setSuccessMessage(''), 10000);
+    } catch (error) {
+      console.log('Failed:', error.response || error.message);
+      alert('Failed to add product');
+    } finally {
+      setIsSubmitting(false); // hide loading
+    }
   };
-
+  
   return (
     <>
     <Navbar />
@@ -92,11 +94,15 @@ export default function ProductForm() {
         />
         
         <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition"
-        >
-          Submit Product
-        </button>
+  type="submit"
+  className={`w-full py-3 rounded transition ${
+    isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+  } text-white`}
+  disabled={isSubmitting}
+>
+  {isSubmitting ? 'Submitting Product...' : 'Submit Product'}
+</button>
+
       </form>
     </div>
     </>
