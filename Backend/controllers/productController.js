@@ -1,4 +1,3 @@
-const Product = require('../models/productModel');
 const pool = require('../db');
 
 // POST /api/products
