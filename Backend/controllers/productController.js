@@ -31,73 +31,73 @@ exports.getAllProducts = async (req, res) => {
 
 
 
-exports.search = async (req, res) => {
-  const { q } = req.query;
-  console.log('Search query:', q);
+// exports.search = async (req, res) => {
+//   const { q } = req.query;
+//   console.log('Search query:', q);
 
-  const keywordMap = {
-    sit: ['chair', 'sofa', 'bench', 'stool'],
-    family: ['sofa', 'bench', 'dining table'],
-    relax: ['sofa', 'recliner', 'bean bag'],
-    sleep: ['bed', 'mattress', 'cot'],
-    work: ['desk', 'chair', 'table'],
-    wear: ['shirt', 't-shirt', 'pants'],
-    store: ['shelf', 'cabinet', 'drawer'],
-    cook: ['oven', 'stove', 'microwave'],
-  };
+//   const keywordMap = {
+//     sit: ['chair', 'sofa', 'bench', 'stool'],
+//     family: ['sofa', 'bench', 'dining table'],
+//     relax: ['sofa', 'recliner', 'bean bag'],
+//     sleep: ['bed', 'mattress', 'cot'],
+//     work: ['desk', 'chair', 'table'],
+//     wear: ['shirt', 't-shirt', 'pants'],
+//     store: ['shelf', 'cabinet', 'drawer'],
+//     cook: ['oven', 'stove', 'microwave'],
+//   };
 
-  try {
-    if (!q) {
-      const all = await pool.query('SELECT * FROM products ORDER BY created_at DESC');
-      return res.json(all.rows);
-    }
+//   try {
+//     if (!q) {
+//       const all = await pool.query('SELECT * FROM products ORDER BY created_at DESC');
+//       return res.json(all.rows);
+//     }
 
-    const inputWords = q.toLowerCase().split(/\s+/);
-    console.log('Input words:', inputWords);
+//     const inputWords = q.toLowerCase().split(/\s+/);
+//     console.log('Input words:', inputWords);
 
-    // Build search terms from keywords and synonyms
-    const searchTerms = new Set();
+//     // Build search terms from keywords and synonyms
+//     const searchTerms = new Set();
 
-    inputWords.forEach(word => {
-      if (keywordMap[word]) {
-        keywordMap[word].forEach(term => searchTerms.add(term));
-      }
-      searchTerms.add(word);
-    });
+//     inputWords.forEach(word => {
+//       if (keywordMap[word]) {
+//         keywordMap[word].forEach(term => searchTerms.add(term));
+//       }
+//       searchTerms.add(word);
+//     });
 
-    console.log('Search terms:', Array.from(searchTerms));
+//     console.log('Search terms:', Array.from(searchTerms));
 
-    const conditions = [];
-    const values = [];
+//     const conditions = [];
+//     const values = [];
 
-    Array.from(searchTerms).forEach((term, idx) => {
-      const placeholder = `$${idx + 1}`;
-      conditions.push(`LOWER(name) LIKE ${placeholder} OR LOWER(description) LIKE ${placeholder}`);
-      values.push(`%${term}%`);
-    });
+//     Array.from(searchTerms).forEach((term, idx) => {
+//       const placeholder = `$${idx + 1}`;
+//       conditions.push(`LOWER(name) LIKE ${placeholder} OR LOWER(description) LIKE ${placeholder}`);
+//       values.push(`%${term}%`);
+//     });
 
-    const query = `
-      SELECT * FROM products
-      WHERE ${conditions.join(' OR ')}
-      ORDER BY created_at DESC
-    `;
+//     const query = `
+//       SELECT * FROM products
+//       WHERE ${conditions.join(' OR ')}
+//       ORDER BY created_at DESC
+//     `;
 
-    console.log('Final query:', query);
-    console.log('Values:', values);
+//     console.log('Final query:', query);
+//     console.log('Values:', values);
 
-    const result = await pool.query(query, values);
+//     const result = await pool.query(query, values);
 
-    if (result.rows.length === 0) {
-      return res.json({ message: 'No products found' });
-    }
+//     if (result.rows.length === 0) {
+//       return res.json({ message: 'No products found' });
+//     }
 
-    res.json(result.rows);
+//     res.json(result.rows);
 
-  } catch (err) {
-    console.error('Search error:', err);
-    res.status(500).json({ error: 'Failed to search products' });
-  }
-};
+//   } catch (err) {
+//     console.error('Search error:', err);
+//     res.status(500).json({ error: 'Failed to search products' });
+//   }
+// };
 
 
 //  Update a product

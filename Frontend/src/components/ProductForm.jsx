@@ -94,14 +94,14 @@ export default function ProductForm() {
         />
         
         <button
-  type="submit"
-  className={`w-full py-3 rounded transition ${
-    isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-  } text-white`}
-  disabled={isSubmitting}
->
-  {isSubmitting ? 'Submitting Product...' : 'Submit Product'}
-</button>
+          type="submit"
+          className={`w-full py-3 rounded transition ${
+            isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+          } text-white`}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Submitting Product...' : 'Submit Product'}
+        </button>
 
       </form>
     </div>
