@@ -5,7 +5,7 @@ const {
   getAllProducts,
   getProductById,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 } = require('../controllers/productController');
 
 // Routes

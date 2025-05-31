@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 
 
 const productRoutes = require('./routes/productRoutes');
-
+z
 app.use('/api/products', productRoutes);
 
 
