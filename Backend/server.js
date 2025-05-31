@@ -4,8 +4,6 @@ const cors = require('cors');
 const pool = require('./db');
 
 const app = express();
-
-
 app.use(cors());
 app.use(express.json());
 
@@ -15,12 +13,9 @@ app.use((req, res, next) => {
   next();
 });
 
-
 const productRoutes = require('./routes/productRoutes');
 
 app.use('/api/products', productRoutes);
-
-
 app.use((err, req, res, next) => {
   console.error('Server error:', err);
   res.status(500).json({ error: 'Internal server error' });
